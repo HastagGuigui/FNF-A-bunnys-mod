@@ -40,15 +40,7 @@ class StoryMenuState extends MusicBeatState
 
 	public static var weekUnlocked:Array<Bool> = [];
 
-	var weekCharacters:Array<Dynamic> = [
-		['', 'bf', 'gf'],
-		['dad', 'bf', 'gf'],
-		['spooky', 'bf', 'gf'],
-		['pico', 'bf', 'gf'],
-		['mom', 'bf', 'gf'],
-		['parents-christmas', 'bf', 'gf'],
-		['senpai', 'bf', 'gf']
-	];
+	var weekCharacters:Array<Dynamic> = ['gf', ''];
 
 	var weekNames:Array<String> = CoolUtil.coolTextFile(Paths.txt('data/weekNames'));
 
@@ -167,9 +159,7 @@ class StoryMenuState extends MusicBeatState
 
 		trace("Line 96");
 
-		grpWeekCharacters.add(new MenuCharacter(0, 100, 0.5, false));
-		grpWeekCharacters.add(new MenuCharacter(450, 25, 0.9, true));
-		grpWeekCharacters.add(new MenuCharacter(850, 100, 0.5, true));
+		grpWeekCharacters.add(new MenuCharacter(450, 25, 1, true));
 
 		difficultySelectors = new FlxGroup();
 		add(difficultySelectors);
@@ -263,57 +253,57 @@ class StoryMenuState extends MusicBeatState
 
 				if (gamepad != null)
 				{
-					if (gamepad.justPressed.DPAD_UP)
+					if (gamepad.justPressed.DPAD_LEFT)
 					{
 						changeWeek(-1);
 					}
-					if (gamepad.justPressed.DPAD_DOWN)
+					if (gamepad.justPressed.DPAD_RIGHT)
 					{
 						changeWeek(1);
 					}
 
-					if (gamepad.pressed.DPAD_RIGHT)
+					if (gamepad.pressed.DPAD_UP)
 						rightArrow.animation.play('press')
 					else
 						rightArrow.animation.play('idle');
-					if (gamepad.pressed.DPAD_LEFT)
+					if (gamepad.pressed.DPAD_DOWN)
 						leftArrow.animation.play('press');
 					else
 						leftArrow.animation.play('idle');
 
-					if (gamepad.justPressed.DPAD_RIGHT)
+					if (gamepad.justPressed.DPAD_UP)
 					{
 						changeDifficulty(1);
 					}
-					if (gamepad.justPressed.DPAD_LEFT)
+					if (gamepad.justPressed.DPAD_DOWN)
 					{
 						changeDifficulty(-1);
 					}
 				}
 
-				if (FlxG.keys.justPressed.UP)
+				if (FlxG.keys.justPressed.LEFT)
 				{
 					changeWeek(-1);
 				}
 
-				if (FlxG.keys.justPressed.DOWN)
+				if (FlxG.keys.justPressed.RIGHT)
 				{
 					changeWeek(1);
 				}
 
-				if (controls.RIGHT)
+				if (controls.UP)
 					rightArrow.animation.play('press')
 				else
 					rightArrow.animation.play('idle');
 
-				if (controls.LEFT)
+				if (controls.DOWN)
 					leftArrow.animation.play('press');
 				else
 					leftArrow.animation.play('idle');
 
-				if (controls.RIGHT_P)
+				if (controls.UP_P)
 					changeDifficulty(1);
-				if (controls.LEFT_P)
+				if (controls.DOWN_P)
 					changeDifficulty(-1);
 			}
 
@@ -349,7 +339,7 @@ class StoryMenuState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('confirmMenu'));
 
 				grpWeekText.members[curWeek].startFlashing();
-				grpWeekCharacters.members[1].animation.play('bfConfirm');
+				// grpWeekCharacters.members[1].animation.play('bfConfirm');
 				stopspamming = true;
 			}
 
@@ -446,9 +436,7 @@ class StoryMenuState extends MusicBeatState
 
 	function updateText()
 	{
-		grpWeekCharacters.members[0].setCharacter(weekCharacters[curWeek][0]);
-		grpWeekCharacters.members[1].setCharacter(weekCharacters[curWeek][1]);
-		grpWeekCharacters.members[2].setCharacter(weekCharacters[curWeek][2]);
+		grpWeekCharacters.members[0].setCharacter(weekCharacters[curWeek]);
 
 		txtTracklist.text = "Tracks\n";
 		var stringThing:Array<String> = weekData()[curWeek];
@@ -483,16 +471,5 @@ class StoryMenuState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
-
-		if (curBeat % 2 == 0)
-		{
-			grpWeekCharacters.members[0].bopHead();
-			grpWeekCharacters.members[1].bopHead();
-		}
-		else if (weekCharacters[curWeek][0] == 'spooky' || weekCharacters[curWeek][0] == 'gf')
-			grpWeekCharacters.members[0].bopHead();
-
-		if (weekCharacters[curWeek][2] == 'spooky' || weekCharacters[curWeek][2] == 'gf')
-			grpWeekCharacters.members[2].bopHead();
 	}
 }

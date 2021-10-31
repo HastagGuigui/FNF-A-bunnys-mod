@@ -39,6 +39,8 @@ class MenuCharacter extends FlxSprite
 	private var danceLeft:Bool = false;
 	private var character:String = '';
 
+	public var sprite:FlxSprite;
+
 	public function new(x:Int, y:Int, scale:Float, flipped:Bool)
 	{
 		super(x, y);
