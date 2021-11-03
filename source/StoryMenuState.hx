@@ -49,6 +49,9 @@ class StoryMenuState extends MusicBeatState
 
 	var txtTracklist:FlxText;
 
+	var sickAssBG:FlxSprite;
+	var sickAssBG2:FlxSprite;
+
 	var grpWeekText:FlxTypedGroup<MenuItem>;
 	var grpWeekCharacters:FlxTypedGroup<FlxSprite>;
 
@@ -100,8 +103,17 @@ class StoryMenuState extends MusicBeatState
 			}
 		}
 
-		var yellowBG:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, 0xFF26B7FF);
-		add(yellowBG);
+		var colorsFile = CoolUtil.coolTextFile(Paths.txt('data/menuColors'));
+		var SelectedColor = colorsFile[curWeek].split(",");
+
+		sickAssBG = new FlxSprite(-FlxG.width * 0.25, -FlxG.height * 0.25).loadGraphic(Paths.loadImage('storymenu/backgrounds/week' + curWeek));
+		sickAssBG.setGraphicSize(FlxG.width, FlxG.height);
+		add(sickAssBG);
+
+		sickAssBG2 = new FlxSprite(0,
+			0).makeGraphic(FlxG.width, FlxG.height,
+			FlxColor.fromRGB(Std.parseInt(SelectedColor[0]), Std.parseInt(SelectedColor[1]), Std.parseInt(SelectedColor[2]), 100));
+		add(sickAssBG2);
 
 		persistentUpdate = persistentDraw = true;
 
@@ -443,8 +455,14 @@ class StoryMenuState extends MusicBeatState
 	function updateText()
 	{
 		grpWeekCharacters.members[0].loadGraphic('storymenu/portaits/week' + curWeek);
+		var colorsFile = CoolUtil.coolTextFile(Paths.txt('data/menuColors'));
+		var SelectedColor = colorsFile[curWeek].split(",");
+
+		sickAssBG.loadGraphic('storymenu/portaits/week' + curWeek);
+		sickAssBG2.color = FlxColor.fromRGB(Std.parseInt(SelectedColor[0]), Std.parseInt(SelectedColor[1]), Std.parseInt(SelectedColor[2]), 100);
 
 		// txtTracklist.text = "Tracks\n";
+
 		// var stringThing:Array<String> = weekData()[curWeek];
 		//
 		// for (i in stringThing)
